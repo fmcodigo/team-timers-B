@@ -1,0 +1,140 @@
+﻿@page "/gamesession/{gameId}"
+@using Timers.Shared.ViewModels;
+@using Timers.Shared.Services;
+@inject GameService gameService
+
+<h2>Team Timers</h2>
+<br>
+
+@if (game == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <BlazorNav IsTabs>
+        <BlazorNavLink onclick="@(() => onclickTab(1))" IsActive="@(active == 1)">Players List</BlazorNavLink>
+        <BlazorNavLink onclick="@(() => onclickTab(2))" IsActive="@(active == 2)">Timer Controls</BlazorNavLink>
+        <BlazorNavLink onclick="@(() => onclickTab(3))" IsActive="@(active == 3)">Game In Progress</BlazorNavLink>
+    </BlazorNav>
+    <TabContent>
+        <TabPane IsOpen="@(active == 1)">
+            <p>Team: @game.HomeTeam.Name</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Jersey</th>
+                        <th scope="col">Name</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var player in game.HomeTeam.Players.OrderBy(p => p.Name))
+                    {
+                        <tr class="@player.IsPresent.ToTextListGroupItemPrimary()">
+                            <th scope="row">@player.Jersey</th>
+                            <td>@player.Name</td>
+                            <td onclick="@(e => {player.IsPresent = !player.IsPresent; StateHasChanged();})">
+                                <h3>@(player.IsPresent ? (char)9745 : (char)9744)</h3> @*"☑" : "☐"*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </TabPane>
+        <TabPane IsOpen="@(active == 2)">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <p><h6>Home</h6></p>
+                        <p>
+                            <span class="h2">@game.HomeTeam.Name:</span>
+                            <span><NumericBox ValueChanged="@(v=> { game.HomeTeamScore = v; StateHasChanged(); } )" /></span>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p><h6>Visitor</h6></p>
+                        <p>
+                            <span class="h2">@game.VisitorTeam.Name :</span>
+                            <span><NumericBox ValueChanged="@(v=> { game.VisitorTeamScore = v; StateHasChanged(); } )" /></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <TimerControl SecondsChanged="@(s => TimerEvent(s))" />
+
+
+        </TabPane>
+        <TabPane IsOpen="@(active == 3)">
+            <br />
+            <p>
+                @game.HomeTeam.Name @game.HomeTeamScore
+                - @game.SecondsElapsed.ToTimerString() -
+                @game.VisitorTeamScore @game.VisitorTeam.Name
+            </p>
+            <br />
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Jersey</th>
+                        <th scope="col">Name</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var player in game.HomeTeam.Players.OrderBy(p => p.Name).Where(p => p.IsPresent).ToList())
+                    {
+                        <tr class="@player.IsPlaying.ToTextListGroupItemPrimary()">
+                            <th scope="row">@player.Jersey</th>
+                            <td onclick="@(e => { player.IsPlaying = !player.IsPlaying; StateHasChanged(); })">
+                                @player.Name
+                            </td>
+                            <td>
+                                @player.SecondsPlayed.ToTimerString()
+                            </td>
+                            <td>
+                                <ProgressBar Maximum="@game.GameSetting.MaxPlayerSeconds" Now="@player.SecondsPlayed" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </TabPane>
+    </TabContent>
+
+}
+
+@functions {
+
+    [Parameter] protected string gameId { get; set; }
+
+    private GameVM game { get; set; }
+
+    protected override async Task OnInitAsync()
+    {
+        game = await gameService.GetByIdAsync(new Guid(gameId));
+    }
+
+    // Tabs
+    private int active = 1;
+
+    void onclickTab(int selection)
+    {
+        active = selection;
+        StateHasChanged();
+    }
+
+    void TimerEvent(int seconds)
+    {
+        game.SecondsElapsed = seconds;
+        game.HomeTeam.Players.Where(p => (p.IsPlaying)).ToList().ForEach(p => p.SecondsPlayed++);
+        //BroadcastScoreboard();
+        StateHasChanged();
+    }
+
+
+
+}

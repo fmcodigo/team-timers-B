@@ -1,0 +1,19 @@
+﻿<div class="progress">
+        <div class="progress-bar" role="progressbar" style="@GetPercentageStyle()"
+             aria-valuenow="@Now" aria-valuemin="0" aria-valuemax="@Maximum"></div>
+    </div>
+
+@functions
+{
+    [Parameter] protected int Maximum { get; set; }
+
+    [Parameter] protected int Now { get; set; }
+
+    private string StylePercentage { get; set; }
+
+    string GetPercentageStyle()
+    {
+        var result = (100D / Maximum) * Now;
+        return result.ToProgressBarStyleWidth();
+    }
+}

@@ -1,0 +1,61 @@
+﻿@using System.Threading;
+<div class="container">
+    <div class="row">
+        <div class="col-2 text-center">
+            <h3>@Seconds.ToTimerString()</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 text-center">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-secondary" onclick="@StartTimer"><span class="oi oi-media-play" aria-hidden="true"></span></button>
+                <button type="button" class="btn btn-secondary" onclick="@PauseTimer"><span class="oi oi-media-pause" aria-hidden="true"></span></button>
+                <button type="button" class="btn btn-secondary" onclick="@ResetTimer"><span class="oi oi-reload" aria-hidden="true"></span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions
+{
+    [Parameter] private int Seconds { get; set; }
+
+    [Parameter] private Action<int> SecondsChanged { get; set; }
+
+    private Timer timer;
+    public bool IsTimerRunning { get; set; } = false;
+
+    void StartTimer()
+    {
+        IsTimerRunning = true;
+        if (timer == null) CreateTimer();
+    }
+
+    void CreateTimer()
+    {
+        timer = new Timer(new TimerCallback(_ =>
+        {
+            if (IsTimerRunning)
+            {
+                SecondsChanged(++Seconds);
+            }
+        }), null, 1000, 1000);
+
+    }
+
+    void PauseTimer()
+    {
+        //timer.Change(Timeout.Infinite, Timeout.Infinite); //Stop timer
+        IsTimerRunning = false;
+    }
+
+    void ResetTimer()
+    {
+        Seconds = 0;
+        SecondsChanged(Seconds);
+
+        IsTimerRunning = false;
+    }
+
+
+}

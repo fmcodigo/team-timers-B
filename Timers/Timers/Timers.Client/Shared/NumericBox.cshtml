@@ -1,0 +1,30 @@
+﻿<div class="btn-group" role="group" aria-label="NumericBox">
+    <button onclick="@Decrement" type="button" class="btn btn-secondary" aria-label="Decrement">
+        <span class="oi oi-minus" aria-hidden="true"></span>
+    </button>
+    <button type="button" class="btn btn-secondary" aria-label="Score" disabled>
+        <span class="h4" aria-hidden="true">@Value</span>
+    </button>
+    <button onclick="@Increment" type="button" class="btn btn-secondary" aria-label="Increment">
+        <span class="oi oi-plus" aria-hidden="true"></span>
+    </button>
+</div>
+
+@functions
+{
+    [Parameter] private int Value { get; set; }
+
+    [Parameter] private Action<int> ValueChanged { get; set; }
+
+    void Increment()
+    {
+        if (Value < 99) Value++;
+        ValueChanged(Value);
+    }
+
+    void Decrement()
+    {
+        if (Value > 0) Value--;
+        ValueChanged(Value);
+    }
+}
