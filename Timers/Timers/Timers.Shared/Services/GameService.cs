@@ -12,15 +12,15 @@ namespace Timers.Shared.Services
     {
         private readonly IMapper _mapper;
 
-        private readonly IRepository<Game> _gameRepository;
-        private readonly IRepository<GameSetting> _gameSettingRepository;
-        private readonly IPlayerRepository<Player> _playerRepository;
-        private readonly IRepository<Team> _teamRepository;
+        private readonly IRepository<IGame> _gameRepository;
+        private readonly IRepository<IGameSetting> _gameSettingRepository;
+        private readonly IPlayerRepository<IPlayer> _playerRepository;
+        private readonly IRepository<ITeam> _teamRepository;
 
-        public GameService(IMapper mapper, IRepository<Game> gameRepository,
-            IRepository<GameSetting> gameSettingRepository,
-            IPlayerRepository<Player> playerRepository,
-            IRepository<Team> teamRepository)
+        public GameService(IMapper mapper, IRepository<IGame> gameRepository,
+            IRepository<IGameSetting> gameSettingRepository,
+            IPlayerRepository<IPlayer> playerRepository,
+            IRepository<ITeam> teamRepository)
         {
             _mapper = mapper;
             _gameRepository = gameRepository ?? throw new ArgumentNullException(nameof(gameRepository));
@@ -29,20 +29,19 @@ namespace Timers.Shared.Services
             _teamRepository = teamRepository ?? throw new ArgumentNullException(nameof(teamRepository));
         }
 
-        public async Task<GameVM> GetByIdAsync(Guid id)
+        public async Task<IGameVM> GetByIdAsync(Guid id)
         {
             var game = await _gameRepository.GetByIdAsync(id);
-            var gameVM = _mapper.Map<Game, GameVM>(game);
+            var gameVM = _mapper.Map<IGame, IGameVM>(game);
 
             var homeTeam = await _teamRepository.GetByIdAsync(gameVM.HomeTeamId);
-            var homeTeamVM = _mapper.Map<Team, TeamVM>(homeTeam);
+            var homeTeamVM = _mapper.Map<ITeam, ITeamVM>(homeTeam);
             var players = await _playerRepository.GetItemsByIdAsync(gameVM.HomeTeamId);
-            homeTeamVM.Players = _mapper.Map<IEnumerable<Player>, IEnumerable<PlayerVM>>(players);
+            homeTeamVM.Players = _mapper.Map<IEnumerable<IPlayer>, IEnumerable<IPlayerVM>>(players);
             gameVM.HomeTeam = homeTeamVM;
 
             var visitorTeam = await _teamRepository.GetByIdAsync(gameVM.VisitorTeamId);
-            var visitorTeamVM = _mapper.Map<Team, TeamVM>(visitorTeam);
-            //visitorTeamVM.Players = await _playerRepository.GetItemsByIdAsync(gameVM.VisitorTeamId);
+            var visitorTeamVM = _mapper.Map<ITeam, ITeamVM>(visitorTeam);
             gameVM.VisitorTeam = visitorTeamVM;
 
             gameVM.GameSetting = await _gameSettingRepository.GetByIdAsync(gameVM.GameSettingId);

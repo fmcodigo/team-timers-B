@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Timers.Shared.Models
+namespace Timers.Models
 {
-    public class Player : IPlayer
+    public class TeamXVM
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Jersey { get; set; }
-        public Guid TeamId { get; set; }
+
+        public IEnumerable<PlayerXVM> Players { get; set; }
     }
 }

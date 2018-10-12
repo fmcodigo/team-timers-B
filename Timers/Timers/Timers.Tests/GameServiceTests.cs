@@ -11,7 +11,7 @@ namespace Timers.Tests
     public class GameServiceTests
     {
         private readonly IGameService _gameService;
-        public GameVM _gameVM { get; private set; }
+        public IGameVM _gameVM { get; private set; }
 
         public GameServiceTests(FixtureDI fixture)
         {

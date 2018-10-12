@@ -8,7 +8,7 @@ namespace Timers.Shared.Services
     {
         //IEnumerable<GameVM> GetAll();
         //Game Add(Game newItem);
-        Task<GameVM> GetByIdAsync(Guid id);
+        Task<IGameVM> GetByIdAsync(Guid id);
         //void Remove(Guid id);
     }
 }

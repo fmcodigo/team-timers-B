@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Timers.Shared.Models
+namespace Timers.Models
 {
-    public class GameSetting : IGameSetting
+    public class GameSettingXVM
     {
         public Guid Id { get; set; }
         public String Name { get; set; }

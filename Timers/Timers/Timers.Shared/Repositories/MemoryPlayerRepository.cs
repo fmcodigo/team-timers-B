@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Timers.Shared.Repositories
 {
-    public class MemoryPlayerRepository : IPlayerRepository<Player>
+    public class MemoryPlayerRepository : IPlayerRepository<IPlayer>
     {
-        private List<Player> Items { get; set; }
+        private List<IPlayer> Items { get; set; }
         public MemoryPlayerRepository()
         {
             SeedItems();
@@ -16,7 +16,7 @@ namespace Timers.Shared.Repositories
 
         void SeedItems()
         {
-            Items = new List<Player>();
+            Items = new List<IPlayer>();
 
             var GalaxyTeamGuid = new Guid("aa17ac7b-3e35-4182-9ae3-a572500b0aff");
 
@@ -85,21 +85,21 @@ namespace Timers.Shared.Repositories
             });
         }
 
-        public Task<Player> GetByIdAsync(Guid id)
+        public Task<IPlayer> GetByIdAsync(Guid id)
         {
             var result = Items.Where(i => i.Id == id).SingleOrDefault();
             return Task.FromResult(result);
         }
 
-        public Task<IEnumerable<Player>> GetAllAsync()
+        public Task<IEnumerable<IPlayer>> GetAllAsync()
         {
-            return Task.FromResult(Items as IEnumerable<Player>);
+            return Task.FromResult(Items as IEnumerable<IPlayer>);
         }
 
-        public Task<IEnumerable<Player>> GetItemsByIdAsync(Guid teamId)
+        public Task<IEnumerable<IPlayer>> GetItemsByIdAsync(Guid teamId)
         {
             var results  = Items.Where(i => i.TeamId == teamId).ToList();
-            return Task.FromResult(results as IEnumerable<Player>);
+            return Task.FromResult(results as IEnumerable<IPlayer>);
         }
     }
 }

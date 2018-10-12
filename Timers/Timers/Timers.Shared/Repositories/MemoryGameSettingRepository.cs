@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Timers.Shared.Repositories
 {
-    public class MemoryGameSettingRepository : IRepository<GameSetting>
+    public class MemoryGameSettingRepository : IRepository<IGameSetting>
     {
-        private List<GameSetting> Items { get; set; }
+        private List<IGameSetting> Items { get; set; }
 
         public MemoryGameSettingRepository()
         {
@@ -17,7 +17,7 @@ namespace Timers.Shared.Repositories
 
         void SeedItems()
         {
-            Items = new List<GameSetting>();
+            Items = new List<IGameSetting>();
 
             Items.Add(new GameSetting()
             {
@@ -30,15 +30,15 @@ namespace Timers.Shared.Repositories
             });
         }
 
-        public Task<GameSetting> GetByIdAsync(Guid id)
+        public Task<IGameSetting> GetByIdAsync(Guid id)
         {
             var result = Items.Where(i => i.Id == id).SingleOrDefault();
             return Task.FromResult(result);
         }
 
-        public Task<IEnumerable<GameSetting>> GetAllAsync()
+        public Task<IEnumerable<IGameSetting>> GetAllAsync()
         {
-            return Task.FromResult(Items as IEnumerable<GameSetting>);
+            return Task.FromResult(Items as IEnumerable<IGameSetting>);
         }
     }
 }

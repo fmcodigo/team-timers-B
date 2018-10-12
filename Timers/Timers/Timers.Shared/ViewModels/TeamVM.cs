@@ -1,12 +1,10 @@
 ﻿using Timers.Shared.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Timers.Shared.ViewModels
 {
-    public class TeamVM : Team
+    public class TeamVM : Team, ITeamVM
     {
-        public IEnumerable<PlayerVM> Players { get; set; }
+        public IEnumerable<IPlayerVM> Players { get; set; }
     }
 }

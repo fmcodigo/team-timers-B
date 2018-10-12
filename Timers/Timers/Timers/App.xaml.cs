@@ -5,6 +5,7 @@ using Timers.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Prism.Unity;
+using AutoMapper;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Timers
@@ -24,13 +25,23 @@ namespace Timers
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("NavigationPage/GameSessionPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
+            containerRegistry.RegisterForNavigation<GameSessionPage>();
+
+            //containerRegistry.RegisterSingleton<IGameService, GameService>();
+
+            var config = new MapperConfiguration(c =>
+            {
+                c.AddProfile(new AutomapperProfileX());
+            });
+            containerRegistry.RegisterInstance<IMapper>(config.CreateMapper());
+
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Timers.Shared.Models
 {
-    public class Game
+    public class Game : IGame
     {
         public Guid Id { get; set; }
         public Guid GameSettingId { get; set; }

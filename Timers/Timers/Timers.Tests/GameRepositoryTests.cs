@@ -10,12 +10,12 @@ namespace Timers.Tests
     [Collection("DI collection")]
     public class GameRepositoryTests
     {
-        private readonly IRepository<Game> _gameRepository;
+        private readonly IRepository<IGame> _gameRepository;
 
         public GameRepositoryTests(FixtureDI fixture)
         {
             var serviceProvider = fixture.ServiceProvider;
-            _gameRepository = serviceProvider.GetService<IRepository<Game>>();
+            _gameRepository = serviceProvider.GetService<IRepository<IGame>>();
 
         }
 

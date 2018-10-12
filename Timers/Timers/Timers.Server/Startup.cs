@@ -9,6 +9,7 @@ using System.Net.Mime;
 using Timers.Shared.Models;
 using Timers.Shared.Repositories;
 using AutoMapper;
+using Timers.Shared.Services;
 
 namespace Timers.Shared
 {
@@ -20,11 +21,11 @@ namespace Timers.Shared
         {
             services.AddServerSideBlazor<Client.Startup>();
             
-            services.TryAddSingleton<IRepository<Game>, MemoryGameRepository>();
-            services.TryAddSingleton<IRepository<GameSetting>, MemoryGameSettingRepository>();
-            services.TryAddSingleton<IPlayerRepository<Player>, MemoryPlayerRepository>();
-            services.TryAddSingleton<IRepository<Team>, MemoryTeamRepository>();
-            //services.TryAddSingleton<IGameService, GameService>();
+            services.TryAddSingleton<IRepository<IGame>, MemoryGameRepository>();
+            services.TryAddSingleton<IRepository<IGameSetting>, MemoryGameSettingRepository>();
+            services.TryAddSingleton<IPlayerRepository<IPlayer>, MemoryPlayerRepository>();
+            services.TryAddSingleton<IRepository<ITeam>, MemoryTeamRepository>();
+            services.TryAddSingleton<IGameService, GameService>();
 
             services.AddMvc();
             

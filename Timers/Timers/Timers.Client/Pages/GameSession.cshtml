@@ -1,7 +1,7 @@
 ﻿@page "/gamesession/{gameId}"
 @using Timers.Shared.ViewModels;
 @using Timers.Shared.Services;
-@inject GameService gameService
+@inject IGameService gameService
 
 <h2>Team Timers</h2>
 <br>
@@ -111,7 +111,7 @@ else
 
     [Parameter] protected string gameId { get; set; }
 
-    private GameVM game { get; set; }
+    private IGameVM game { get; set; }
 
     protected override async Task OnInitAsync()
     {
