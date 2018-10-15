@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Timers.Shared;
 using Timers.Shared.Repositories;
 using Timers.Shared.Services;
 using Timers.Shared.Models;
 using System;
 using Xunit;
+using Timers.Client.Services;
+using Timers.Client;
 
 namespace Timers.Tests
 {
@@ -17,10 +18,10 @@ namespace Timers.Tests
         {
             IServiceCollection services = new ServiceCollection();
 
-            services.TryAddSingleton<IRepository<IGame>, MemoryGameRepository>();
-            services.TryAddSingleton<IRepository<IGameSetting>, MemoryGameSettingRepository>();
-            services.TryAddSingleton<IPlayerRepository<IPlayer>, MemoryPlayerRepository>();
-            services.TryAddSingleton<IRepository<ITeam>, MemoryTeamRepository>();
+            services.TryAddSingleton<IRepository<Game>, MemoryGameRepository>();
+            services.TryAddSingleton<IRepository<GameSetting>, MemoryGameSettingRepository>();
+            services.TryAddSingleton<IPlayerRepository<Player>, MemoryPlayerRepository>();
+            services.TryAddSingleton<IRepository<Team>, MemoryTeamRepository>();
             services.TryAddSingleton<IGameService, GameService>();
 
             var config = new MapperConfiguration(c =>

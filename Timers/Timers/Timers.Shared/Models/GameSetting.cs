@@ -2,7 +2,7 @@
 
 namespace Timers.Shared.Models
 {
-    public class GameSetting : IGameSetting
+    public class GameSetting
     {
         public Guid Id { get; set; }
         public String Name { get; set; }
@@ -11,6 +11,5 @@ namespace Timers.Shared.Models
         public int MinutesPerPeriod { get; set; }
         public bool IsCountdown { get; set; }
 
-        public int MaxPlayerSeconds => (MinutesPerPeriod * Periods * 60);
     }
 }

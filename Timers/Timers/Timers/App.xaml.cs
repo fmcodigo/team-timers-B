@@ -1,11 +1,14 @@
 ﻿using Prism;
 using Prism.Ioc;
-using Timers.ViewModels;
 using Timers.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Prism.Unity;
 using AutoMapper;
+using Timers.Shared.Services;
+using Timers.Shared.Models;
+using Timers.Shared.Repositories;
+using Timers.Services;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Timers
@@ -25,6 +28,7 @@ namespace Timers
         {
             InitializeComponent();
 
+            //await NavigationService.NavigateAsync("NavigationPage/MainPage");
             await NavigationService.NavigateAsync("NavigationPage/GameSessionPage");
         }
 
@@ -34,14 +38,17 @@ namespace Timers
             containerRegistry.RegisterForNavigation<MainPage>();
             containerRegistry.RegisterForNavigation<GameSessionPage>();
 
-            //containerRegistry.RegisterSingleton<IGameService, GameService>();
+            containerRegistry.RegisterSingleton<IRepository<Game>, MemoryGameRepository>();
+            containerRegistry.RegisterSingleton<IRepository<GameSetting>, MemoryGameSettingRepository>();
+            containerRegistry.RegisterSingleton<IPlayerRepository<Player>, MemoryPlayerRepository>();
+            containerRegistry.RegisterSingleton<IRepository<Team>, MemoryTeamRepository>();
+            containerRegistry.RegisterSingleton<IGameService, GameService>();
 
             var config = new MapperConfiguration(c =>
             {
                 c.AddProfile(new AutomapperProfileX());
             });
-            containerRegistry.RegisterInstance<IMapper>(config.CreateMapper());
-
+            containerRegistry.RegisterInstance(config.CreateMapper());
         }
     }
 }

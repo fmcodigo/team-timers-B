@@ -1,43 +1,45 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 using Prism.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Timers.Shared.Services;
 using Timers.Shared.ViewModels;
 
 namespace Timers.ViewModels
 {
-	public class GameSessionPageViewModel : BindableBase, INavigationAware
+    public class GameSessionPageViewModel : BindableBase, INavigationAware
     {
-        public IGameVM Game { get; set; }
         private readonly IGameService _gameService;
+        private readonly INavigationService _navigationService;
 
-        public GameSessionPageViewModel(IGameService gameService)
+        public GameSessionPageViewModel(INavigationService navigationService, IGameService gameService)
         {
             _gameService = gameService ?? throw new ArgumentNullException(nameof(gameService));
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
         }
 
-        public async Task LoadGameAsync()
+        private IGameVM game;
+        public IGameVM Game
         {
-            Game = await _gameService.GetByIdAsync(new Guid("d66945ca-e9ef-4b5b-8084-35ea568d937c"));
+            get { return game; }
+            set { SetProperty(ref game, value); }
         }
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public void OnNavigatedTo(NavigationParameters parameters)
+        public async void OnNavigatedTo(NavigationParameters parameters)
         {
-            throw new NotImplementedException();
+            if (Game == null)
+                Game = await _gameService.GetByIdAsync(new Guid("d66945ca-e9ef-4b5b-8084-35ea568d937c"));
+            
+            //throw new NotImplementedException();
         }
 
         public void OnNavigatingTo(NavigationParameters parameters)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

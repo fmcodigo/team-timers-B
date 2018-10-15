@@ -1,9 +1,9 @@
-﻿
-using System;
+﻿using System;
+using Timers.Shared.ViewModels;
 
-namespace Timers.Models
+namespace Timers.VM
 {
-    public class PlayerXVM
+    public class PlayerVM : IPlayerVM
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

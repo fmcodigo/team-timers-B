@@ -8,7 +8,7 @@
     <ContentPage>
         <StackLayout>
             <Label Text="Red" FontSize="Medium" HorizontalOptions="Center" />
-            <BoxView Color="Red" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+            <Label Text="{Binding Game.HomeTeam.Name}" />
         </StackLayout>
     </ContentPage>
 

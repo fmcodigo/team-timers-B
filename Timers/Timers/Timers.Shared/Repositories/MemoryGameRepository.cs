@@ -6,9 +6,9 @@ using Timers.Shared.Models;
 
 namespace Timers.Shared.Repositories
 {
-    public class MemoryGameRepository : IRepository<IGame>
+    public class MemoryGameRepository : IRepository<Game>
     {
-        private List<IGame> Items { get; set; }
+        private List<Game> Items { get; set; }
 
         public MemoryGameRepository()
         {
@@ -17,7 +17,7 @@ namespace Timers.Shared.Repositories
 
         void SeedItems()
         {
-            Items = new List<IGame>();
+            Items = new List<Game>();
 
             Items.Add(new Game
             {
@@ -29,15 +29,15 @@ namespace Timers.Shared.Repositories
 
         }
 
-        public Task<IGame> GetByIdAsync(Guid id)
+        public Task<Game> GetByIdAsync(Guid id)
         {
             var result = Items.Where(i => i.Id == id).SingleOrDefault();
             return Task.FromResult(result);
         }
 
-        public Task<IEnumerable<IGame>> GetAllAsync()
+        public Task<IEnumerable<Game>> GetAllAsync()
         {
-            return Task.FromResult(Items as IEnumerable<IGame>);
+            return Task.FromResult(Items as IEnumerable<Game>);
         }
     }
 }

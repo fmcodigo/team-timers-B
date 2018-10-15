@@ -1,6 +1,7 @@
 ﻿using Timers.Shared.Models;
+using Timers.Shared.ViewModels;
 
-namespace Timers.Shared.ViewModels
+namespace Timers.Client.ViewModels
 {
     public class PlayerVM : Player, IPlayerVM
     {

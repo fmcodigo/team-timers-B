@@ -6,9 +6,9 @@ using Timers.Shared.Models;
 
 namespace Timers.Shared.Repositories
 {
-    public class MemoryTeamRepository : IRepository<ITeam>
+    public class MemoryTeamRepository : IRepository<Team>
     {
-        public List<ITeam> Items { get; set; }
+        public List<Team> Items { get; set; }
 
         public MemoryTeamRepository()
         {
@@ -17,7 +17,7 @@ namespace Timers.Shared.Repositories
 
         void SeedItems()
         {
-            Items = new List<ITeam>();
+            Items = new List<Team>();
 
             Items.Add(new Team
             {
@@ -31,15 +31,15 @@ namespace Timers.Shared.Repositories
             });
         }
 
-        public Task<ITeam> GetByIdAsync(Guid id)
+        public Task<Team> GetByIdAsync(Guid id)
         {
             var result = Items.Where(i => i.Id == id).SingleOrDefault();
             return Task.FromResult(result);
         }
 
-        public Task<IEnumerable<ITeam>> GetAllAsync()
+        public Task<IEnumerable<Team>> GetAllAsync()
         {
-            return Task.FromResult(Items as IEnumerable<ITeam>);
+            return Task.FromResult(Items as IEnumerable<Team>);
         }
     }
 }

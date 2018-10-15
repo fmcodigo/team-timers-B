@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Timers.Shared.Models
 {
-    public class Player : IPlayer
+    public class Player
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

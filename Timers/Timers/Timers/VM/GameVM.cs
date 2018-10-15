@@ -1,8 +1,9 @@
 ﻿using System;
+using Timers.Shared.ViewModels;
 
-namespace Timers.Shared.Models
+namespace Timers.VM
 {
-    public class Game
+    public class GameVM : IGameVM
     {
         public Guid Id { get; set; }
         public Guid GameSettingId { get; set; }
@@ -12,6 +13,10 @@ namespace Timers.Shared.Models
         public int VisitorTeamScore { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-    }
 
+        public ITeamVM HomeTeam { get; set; }
+        public ITeamVM VisitorTeam { get; set; }
+        public IGameSettingVM GameSetting { get; set; }
+        public int SecondsElapsed { get; set; }
+    }
 }

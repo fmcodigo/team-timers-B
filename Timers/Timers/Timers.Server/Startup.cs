@@ -10,6 +10,8 @@ using Timers.Shared.Models;
 using Timers.Shared.Repositories;
 using AutoMapper;
 using Timers.Shared.Services;
+using Timers.Client.Services;
+using Timers.Client;
 
 namespace Timers.Shared
 {
@@ -21,10 +23,10 @@ namespace Timers.Shared
         {
             services.AddServerSideBlazor<Client.Startup>();
             
-            services.TryAddSingleton<IRepository<IGame>, MemoryGameRepository>();
-            services.TryAddSingleton<IRepository<IGameSetting>, MemoryGameSettingRepository>();
-            services.TryAddSingleton<IPlayerRepository<IPlayer>, MemoryPlayerRepository>();
-            services.TryAddSingleton<IRepository<ITeam>, MemoryTeamRepository>();
+            services.TryAddSingleton<IRepository<Game>, MemoryGameRepository>();
+            services.TryAddSingleton<IRepository<GameSetting>, MemoryGameSettingRepository>();
+            services.TryAddSingleton<IPlayerRepository<Player>, MemoryPlayerRepository>();
+            services.TryAddSingleton<IRepository<Team>, MemoryTeamRepository>();
             services.TryAddSingleton<IGameService, GameService>();
 
             services.AddMvc();
@@ -34,7 +36,6 @@ namespace Timers.Shared
                 c.AddProfile(new AutomapperProfile());
             });
             services.AddSingleton<IMapper>(s => config.CreateMapper());
-            //services.AddAutoMapper(c => c.AddProfile(new AutomapperProfile()));
 
             services.AddResponseCompression(options =>
             {

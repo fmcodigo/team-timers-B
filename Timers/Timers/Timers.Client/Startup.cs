@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Blazor.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Timers.Shared.Services;
+using Timers.Client.Services;
 
 namespace Timers.Client
 {

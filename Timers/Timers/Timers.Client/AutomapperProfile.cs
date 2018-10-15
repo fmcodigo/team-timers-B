@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
+using Timers.Client.ViewModels;
 using Timers.Shared.Models;
-using Timers.VM;
 
-namespace Timers
+namespace Timers.Client
 {
-    public class AutomapperProfileX : Profile
+    public class AutomapperProfile : Profile
     {
-        public AutomapperProfileX()
+        public AutomapperProfile()
         {
             CreateMap<Game, GameVM>();
             CreateMap<GameVM, Game>();
