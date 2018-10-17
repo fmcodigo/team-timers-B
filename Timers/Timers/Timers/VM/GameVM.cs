@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Timers.Shared.ViewModels;
 
 namespace Timers.VM
@@ -18,5 +19,9 @@ namespace Timers.VM
         public ITeamVM VisitorTeam { get; set; }
         public IGameSettingVM GameSetting { get; set; }
         public int SecondsElapsed { get; set; }
+
+        public string TeamVersusTeam => ($"{HomeTeam.Name} vs {VisitorTeam.Name}");
+        public IEnumerable<IPlayerVM> PlayersPresent => (HomeTeam.Players);
+
     }
 }

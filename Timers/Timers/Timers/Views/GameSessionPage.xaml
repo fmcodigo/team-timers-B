@@ -6,16 +6,26 @@
              x:Class="Timers.Views.GameSessionPage">
 
     <ContentPage>
-        <StackLayout>
-            <Label Text="Red" FontSize="Medium" HorizontalOptions="Center" />
-            <Label Text="{Binding Game.HomeTeam.Name}" />
-        </StackLayout>
+        <TableView Intent="Settings">
+            <TableRoot>
+                <TableSection Title="List of Players">
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="bulb.png" />
+                            <Label Text="left" />
+                            <Label Text="center" HorizontalOptions="CenterAndExpand" />
+                            <Label Text="right" HorizontalOptions="EndAndExpand" />
+                        </StackLayout>
+                    </ViewCell>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+
     </ContentPage>
 
     <ContentPage>
-        <StackLayout>
-            <Label Text="Green" FontSize="Medium" HorizontalOptions="Center" />
-            <BoxView Color="Green" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+        <StackLayout HorizontalOptions="Center">
+            <Label Text="{Binding Game.TeamVersusTeam}" FontSize="Medium" />
         </StackLayout>
     </ContentPage>
 
